@@ -1,0 +1,7 @@
+.TrackControllerCard {
+    width: calc(var(--track-sections-breakpoint) * 100%)
+}
+.WaveformContainerCard {
+    width: calc((1 - var(--track-sections-breakpoint)) * 100%);
+    max-width: calc(var(--waveform-canvas-width) * 1px + (2 * var(--space-3)));
+}

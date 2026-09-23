@@ -1,0 +1,108 @@
+.KnobControlWrapper {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+}
+
+.KnobControlRoot {
+    position: relative;
+
+    width: 48px;
+    height: 48px;
+
+    touch-action: none;
+    user-select: none;
+}
+
+.KnobControlFace {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+
+    width: 48px;
+    height: 48px;
+
+    border-radius: 50%;
+    transform: translateX(-50%);
+}
+
+.KnobControlTrack {
+    position: absolute;
+    inset: 0;
+
+    border-radius: 50%;
+
+    background: conic-gradient(
+            from calc(360deg - (var(--knob-start) * 1deg)),
+            var(--accent-track) calc((var(--knob-start) + var(--knob-end)) * 1deg),
+            var(--gray-a3) 0deg
+    );
+
+    -webkit-mask: radial-gradient(
+            farthest-side,
+            transparent calc(100% - 4px),
+            #000 calc(100% - 4px)
+    );
+
+    mask: radial-gradient(
+            farthest-side,
+            transparent calc(100% - 4px),
+            #000 calc(100% - 4px)
+    );
+}
+
+.KnobControlIndicator {
+    position: absolute;
+    inset: 0;
+
+    transform-origin: center;
+    pointer-events: none;
+}
+
+.KnobControlThumb {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+
+    border: 0;
+    border-radius: 50%;
+
+    cursor: grab;
+    pointer-events: auto;
+    outline: none;
+}
+
+.KnobControlThumb::after {
+    content: "";
+
+    position: absolute;
+    top: 3px;
+    left: 50%;
+
+    width: 4px;
+    height: 7px;
+
+    border-radius: 999px;
+
+    transform: translateX(-50%);
+}
+
+.KnobControlThumb:focus-visible {
+    box-shadow: 0 0 0 3px rgb(54 163 255 / 50%);
+}
+
+.KnobControlThumb:active {
+    cursor: grabbing;
+}
+
+.KnobControlValue {
+    min-width: 32px;
+
+    color: #222;
+    font: 14px/1.2 sans-serif;
+    text-align: center;
+}

@@ -1,0 +1,6 @@
+.TrackPicture {
+    max-width: var(--track-picture-max-size);
+    max-height: var(--track-picture-max-size);
+    border-radius: var(--base-card-border-radius);
+    box-shadow: var(--base-card-surface-box-shadow);
+}

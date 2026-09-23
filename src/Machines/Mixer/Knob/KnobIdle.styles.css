@@ -1,0 +1,3 @@
+.IdleButton:where(:not(:hover)) {
+    background-color: var(--color-background) !important;
+}

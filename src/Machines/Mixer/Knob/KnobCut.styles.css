@@ -1,0 +1,6 @@
+.CutButton:where(:not(:hover)) {
+    background-color: var(--color-background) !important;
+}
+.CutButton:where(.rt-variant-surface) {
+    background-color: var(--accent-surface) !important;
+}

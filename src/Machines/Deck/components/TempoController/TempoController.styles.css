@@ -1,0 +1,38 @@
+.TempoControllerRoot {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: calc(0.625 * 208px);
+    width: calc(0.625 * 15px);
+    touch-action: none;
+    user-select: none;
+    place-self: center;
+}
+
+.TempoControllerTrack {
+    position: relative;
+    width: 4px;
+    height: 100%;
+    background: var(--gray-a3);
+    border-radius: 999px;
+}
+
+.TempoControllerRange {
+    position: absolute;
+    width: 100%;
+    top: calc(var(--track-tempo-slider-top) * 1%) !important;
+    bottom: calc(var(--track-tempo-slider-bottom) * 1%) !important;
+    background: var(--accent-track);
+    border-radius: 999px;
+}
+
+.TempoControllerThumb {
+    display: block;
+    width: 40px;
+    height: 10px;
+    background: white;
+    border: 2px solid var(--accent-track);
+    border-radius: 0;
+    position: relative;
+    left: -20px;
+}
