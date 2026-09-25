@@ -17,22 +17,11 @@ class AudioPlayerProcessor extends AudioWorkletProcessor {
 
             switch (msg.type) {
                 case 'load':
-                    // Winston
-                    // this.position = 3400000
-                    // Future
-                    // this.position = 3780000
-                    // Apollo
-                    // this.position = 2100000
                     this.channels = msg.channels.map(ch => new Float32Array(ch));
-                    // this.position = 0;
+                    this.position = 0;
                     this.playbackRate = msg.playbackRate;
                     this.loopStart = msg.loopStart;
                     this.loopEnd = msg.loopStart + msg.loopLength;
-
-                    this.port.postMessage({
-                        type: 'position',
-                        frame: Math.floor(this.position)
-                    });
                     break;
 
                 case 'play':

@@ -20,7 +20,7 @@ export const Waveform: React.FC<WaveformProps> = ({data, playingInfo: {length, t
     // Loop canvas - will also partly display on the visible frame
     const loopRef = useRef<HTMLCanvasElement | null>(null);
 
-    // painting the initial image (expensive work)
+    // painting the initial track image (expensive work)
     useEffect(() => {
         const visibleFrame = visibleFrameRef.current;
         if (!visibleFrame) return;
@@ -47,6 +47,30 @@ export const Waveform: React.FC<WaveformProps> = ({data, playingInfo: {length, t
 
         trackRef.current = trackCanvas;
 
+        if(loopRef.current !== null) {
+            // Rendering part of the track waveform in the frame
+            render(frameCtx, trackCanvas, loopRef.current, position * WAVEFORM_PX_PER_SECOND, visibleFrame.clientWidth /*, tempo*/);
+        }
+
+        setIsDrawingInfo(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data]);
+
+    // painting the initial loop image
+    useEffect(() => {
+        const visibleFrame = visibleFrameRef.current;
+        if (!visibleFrame) return;
+
+        const devicePixelRatio = window.devicePixelRatio || 1;
+
+        visibleFrame.width = visibleFrame.clientWidth * devicePixelRatio;
+        visibleFrame.height = WAVEFORM_CANVAS_HEIGHT * devicePixelRatio;
+
+        const frameCtx = visibleFrame.getContext('2d')!;
+        frameCtx.scale(devicePixelRatio, devicePixelRatio);
+
+        const trackWidth = Math.ceil(data.duration * WAVEFORM_PX_PER_SECOND);
+
         const loopCanvas = document.createElement('canvas');
         loopCanvas.width = trackWidth * devicePixelRatio;
         loopCanvas.height = WAVEFORM_CANVAS_HEIGHT * devicePixelRatio;
@@ -59,10 +83,11 @@ export const Waveform: React.FC<WaveformProps> = ({data, playingInfo: {length, t
 
         loopRef.current = loopCanvas;
 
-        // Rendering part of the track waveform in the frame
-        render(frameCtx, trackCanvas, loopCanvas, 0, visibleFrame.clientWidth /*, tempo*/);
-
-        setIsDrawingInfo(false);
+        if (trackRef.current !== null) {
+            // Rendering part of the track waveform in the frame
+            render(frameCtx, trackRef.current, loopCanvas, position * WAVEFORM_PX_PER_SECOND, visibleFrame.clientWidth /*, tempo*/);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data, loopStart, loopLength, isLoop /*, tempo*/]);
 
     // Shifting the already painted images according to current position
@@ -104,7 +129,7 @@ function render(
     const devicePixelRatioWidth = window.devicePixelRatio || 1;
     const devicePixelRatio = window.devicePixelRatio || 1;
 
-    const sx = Math.max(Math.min(track.width / devicePixelRatioWidth - viewportWidth, position));
+    const sx = Math.max(0, Math.min(track.width / devicePixelRatioWidth - viewportWidth, position));
 
     frameCtx.clearRect(0, 0, viewportWidth, frameCtx.canvas.height);
     frameCtx.imageSmoothingEnabled = false;
